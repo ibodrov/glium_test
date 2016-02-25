@@ -105,9 +105,7 @@ fn main() {
     let mut cnt = 0;
     let mut t0 = time::precise_time_s();
 
-    loop {
-        let ib_slice = index_buffer.slice(0 .. SPRITES_COUNT * 6).unwrap();
-
+    let uniforms = {
         let right = SCREEN_W as f32;
         let bottom = SCREEN_H as f32;
         let left = 0.0;
@@ -115,14 +113,18 @@ fn main() {
         let far = 1.0;
         let near = -1.0;
 
-        let uniforms = uniform! {
+        uniform! {
             matrix: [
                 [2.0 / (right - left),             0.0,                              0.0,                          0.0],
                 [0.0,                              2.0 / (top - bottom),             0.0,                          0.0],
                 [0.0,                              0.0,                              -2.0 / (far - near),          0.0],
                 [-(right + left) / (right - left), -(top + bottom) / (top - bottom), -(far + near) / (far - near), 1.0f32],
             ],
-        };
+        }
+    };
+
+    loop {
+        let ib_slice = index_buffer.slice(0 .. SPRITES_COUNT * 6).unwrap();
 
         let mut target = display.draw();
         target.clear_color(0.0, 0.0, 0.0, 0.0);
