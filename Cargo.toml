@@ -6,3 +6,5 @@ authors = ["Ivan Bodrov <ibodrov@jet.msk.su>"]
 [dependencies]
 glium = "*"
 image = "*"
+rand = "*"
+time = "*"
